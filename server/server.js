@@ -16,14 +16,14 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {//connection refers to a new connection being called.
   console.log('New User is connected.');//listen to an event and do something when that event happens. socket-> refers to individual socket.
 
-  socket.emit('newEmail', {
+  socket.emit('newMessage', {
     from: 'sahil@gmail.com',
     text: 'You feel we can meet yesterday?',
     completedAt: 523
   });
 
-  socket.on('createEmail', (newEmail) => {
-    console.log('Create Email', newEmail);
+  socket.on('createMessage', (message) => {
+    console.log('Create Message', message);
   });
 
   socket.on('disconnect', () => {
