@@ -3,10 +3,10 @@ var socket = io(); //not native to browser. Initiating req to open a web socket 
 socket.on('connect', function ()  { //for the client side.
   console.log('connnected to the server.');
 
-  socket.emit('createMessage', {
-    from: 'sahil@yahoo.com',
-    text: 'blah blah blah'
-  });
+  // socket.emit('createMessage', {
+  //   from: 'sahil@yahoo.com',
+  //   text: 'blah blah blah'
+  // });
 });
 
 socket.on('disconnect', function ()  {
