@@ -22,6 +22,18 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   //   completedAt: 523
   // });
 
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'Welcome to the room',
+    createdAt: new Date().getTime()
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New user joined',
+    createdAt: new Date().getTime()
+  });
+
   socket.on('createMessage', (message) => {
     console.log('Create Message', message);
     io.emit('newMessage', {
@@ -29,6 +41,11 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
       text: message.text,
       createdAt: new Date().getTime()
     });// emits message to every conneted user.
+    // socket.broadcast.emit('newMessage', {//broadcast sends message to all but one, here the user who origially send it.
+    //     from: message.from,
+    //     text: message.text,
+    //     createdAt: new Date().getTime()
+    // });
   });
 
   socket.on('disconnect', () => {
