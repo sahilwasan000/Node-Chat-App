@@ -1,3 +1,4 @@
+
 var socket = io(); //not native to browser. Initiating req to open a web socket from client side and keep it open.
 
 socket.on('connect', function ()  { //for the client side.
