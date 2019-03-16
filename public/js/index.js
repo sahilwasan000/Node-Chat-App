@@ -8,6 +8,11 @@ socket.on('connect', function ()  { //for the client side.
   //   from: 'sahil@yahoo.com',
   //   text: 'blah blah blah'
   // });
+
+  socket.emit('createMessage', {
+    from: 'Harvey',
+    text: 'Hey Mike!'
+  });
 });
 
 socket.on('disconnect', function ()  {
