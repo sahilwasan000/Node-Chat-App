@@ -27,7 +27,7 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
 
   socket.broadcast.emit('newMessage', generateMessage('admin', 'New User Joined'));
 
-  socket.on('createMessage', (message) => {
+  socket.on('createMessage', (message, callback) => {
     console.log('Create Message', message);
     io.emit('newMessage', generateMessage(message.from, message.text));// emits message to every conneted user.
     // socket.broadcast.emit('newMessage', {//broadcast sends message to all but one, here the user who origially send it.
@@ -35,6 +35,7 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
     //     text: message.text,
     //     createdAt: new Date().getTime()
     // });
+    callback();
   });
 
   socket.on('disconnect', () => {
