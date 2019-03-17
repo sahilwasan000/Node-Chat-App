@@ -35,3 +35,20 @@ socket.on('connect', function ()  { //for the client side.
 
     });
   });
+
+
+  var locationButton = jQuery('#send-location');
+  locationButton.on('click', function () {
+    if(!navigator.geolocation){
+    return alert('Browser not supported');
+    }
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+      socket.emit('createLocationMessage', {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
+    }, function () {
+    return alert('Unable to fetch your location.')
+    });
+  });

@@ -38,6 +38,10 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
     callback();
   });
 
+  socket.on('createLocationMessage', (cords) => {
+    io.emit('newMessage', generateMessage('Admin', `${cords.latitude}, ${cords.longitude}`));
+  });
+
   socket.on('disconnect', () => {
     console.log('User is disconnected.');
     });
