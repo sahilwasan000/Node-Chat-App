@@ -5,7 +5,7 @@ const publicPath = path.join(__dirname + '/../public');
 const port = process.env.PORT || 8080;
 const http = require('http');
 const socketIO = require('socket.io');
-const {generateMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 
 const express = require('express');
 const app = express();
@@ -38,8 +38,8 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
     callback();
   });
 
-  socket.on('createLocationMessage', (cords) => {
-    io.emit('newMessage', generateMessage('Admin', `${cords.latitude}, ${cords.longitude}`));
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
   });
 
   socket.on('disconnect', () => {

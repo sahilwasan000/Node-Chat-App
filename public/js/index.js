@@ -18,12 +18,16 @@ socket.on('connect', function ()  { //for the client side.
    jQuery('#messages').append(li);
  });
 
-// socket.emit('createMessage', {
-//     from: 'Harvey',
-//     text: 'Hey Mike!'
-//   }, function () {
-//     console.log('Got it.');
-//   });
+ socket.on('newLocationMessage', function (message) {
+   var li = jQuery('<li></li>');
+   var a = jQuery('<a target="_blank">My Current Location</a>');
+
+   li.text(`${message.from}`);
+   a.attr('href', message.url);
+   li.append(a);
+   jQuery('#messages').append(li);
+
+ });
 
   jQuery('#message-form').on('submit', function(e){
     e.preventDefault();
