@@ -23,9 +23,9 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   //   completedAt: 523
   // });
 
-  socket.emit('newMessage', generateMessage('admin', 'Welcome to the chat app'));
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
-  socket.broadcast.emit('newMessage', generateMessage('admin', 'New User Joined'));
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'));
 
   socket.on('createMessage', (message, callback) => {
     console.log('Create Message', message);

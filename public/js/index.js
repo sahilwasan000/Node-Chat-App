@@ -32,27 +32,33 @@ socket.on('connect', function ()  { //for the client side.
   jQuery('#message-form').on('submit', function(e){
     e.preventDefault();
 
+    var messageTextBox = jQuery('[name=message]');
+
     socket.emit('createMessage', {
       from:'User',
-      text: jQuery('[name=message]').val()
+      text: messageTextBox.val()
     }, function () {
-
+      messageTextBox.val('') //clear output after appending value to page.
     });
   });
 
 
   var locationButton = jQuery('#send-location');
   locationButton.on('click', function () {
-    if(!navigator.geolocation){
+    if(!navigator.geolocation){ //check for older browser.
     return alert('Browser not supported');
     }
 
+    locationButton.attr('disabled', 'disabled').text('Sending Location...');
+
     navigator.geolocation.getCurrentPosition(function (position) {
+      locationButton.removeAttr('disabled').text('Send Location');
       socket.emit('createLocationMessage', {
-        latitude: position.coords.latitude,
+        latitude: position.coords.latitude, //fetch location using geolocation api.
         longitude: position.coords.longitude
       });
     }, function () {
-    return alert('Unable to fetch your location.')
+      locationButton.removeAttr('disabled').text('Send Location');
+    return alert('Unable to fetch your location.') //for asking permission to turn on/off location.
     });
   });
