@@ -13,6 +13,7 @@ var server = http.createServer(app);// We were already using it behind the scene
 var io = socketIO(server);//we get here our web sockets server. We will communicate through betweeen client and server.
 
 app.use(express.static(publicPath));
+const {isRealString} = require('./utils/validation');
 
 io.on('connection', (socket) => {//connection refers to a new connection being called.
   console.log('New User is connected.');//listen to an event and do something when that event happens. socket-> refers to individual socket.
@@ -26,6 +27,15 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'));
+
+//-------Validating Correct Values--------//
+  socket.on('join', (params, callback) => {
+    if(!isRealString(params.name) || !isRealString(params.room)) {
+      callback('Name and Room name are required.');
+    }
+
+    callback();
+  });
 
   socket.on('createMessage', (message, callback) => {
     console.log('Create Message', message);

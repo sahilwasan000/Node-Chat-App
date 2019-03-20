@@ -21,7 +21,19 @@ function scrollToBottom () {
 
 
 socket.on('connect', function ()  { //for the client side.
-  console.log('connnected to the server.');
+  // console.log('connnected to the server.');
+  var params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params, function(err) {
+    if(err) {
+      alert(err);
+      window.location.href = '/';
+    }
+
+    else {
+      console.log('Nooooooo errrr');
+    }
+  });
  });
 
  socket.on('disconnect', function ()  {
