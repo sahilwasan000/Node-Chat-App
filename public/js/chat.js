@@ -1,6 +1,25 @@
 
 var socket = io(); //not native to browser. Initiating req to open a web socket from client side and keep it open.
 
+//Function To enable Auto-Scrolling.
+function scrollToBottom () {
+  //selectors
+  var messages = jQuery('#messages');
+  var newMessage = messages.children('li:last-child');
+
+  //heights
+  var clientHeight = messages.prop('clientHeight'); //cross-browser alternative to fetch a property. -> prop
+  var scrollHeight = messages.prop('scrollHeight');
+  var scrolTop = messages.prop('scrollTop');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight(); //second-last child
+
+  if(clientHeight + scrolTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight);
+  }
+};
+
+
 socket.on('connect', function ()  { //for the client side.
   console.log('connnected to the server.');
  });
@@ -28,6 +47,7 @@ socket.on('connect', function ()  { //for the client side.
    });
 
    jQuery('#messages').append(html);
+   scrollToBottom();
  });
 
  socket.on('newLocationMessage', function (message) {
@@ -49,6 +69,7 @@ socket.on('connect', function ()  { //for the client side.
    });
 
    jQuery('#messages').append(html);
+   scrollToBottom();
  });
 
   jQuery('#message-form').on('submit', function(e){
