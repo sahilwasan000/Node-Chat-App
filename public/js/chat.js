@@ -100,7 +100,6 @@ socket.on('connect', function ()  { //for the client side.
     var messageTextBox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-      from:'User',
       text: messageTextBox.val()
     }, function () {
       messageTextBox.val('') //clear output after appending value to page.

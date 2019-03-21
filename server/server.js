@@ -44,18 +44,25 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   });
 
   socket.on('createMessage', (message, callback) => {
-    console.log('Create Message', message);
-    io.emit('newMessage', generateMessage(message.from, message.text));// emits message to every conneted user.
+    var user = users.getUser(socket.id);
+
+    if(user && isRealString(message.text)) {
+      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));// emits message to every connected user.
+    }
+        callback();
     // socket.broadcast.emit('newMessage', {//broadcast sends message to all but one, here the user who origially send it.
     //     from: message.from,
     //     text: message.text,
     //     createdAt: new Date().getTime()
     // });
-    callback();
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+    var user = users.getUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+    }
   });
 
   socket.on('disconnect', () => {
