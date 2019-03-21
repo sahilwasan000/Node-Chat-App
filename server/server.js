@@ -11,6 +11,8 @@ const express = require('express');
 const app = express();
 var server = http.createServer(app);// We were already using it behind the scenes.
 var io = socketIO(server);//we get here our web sockets server. We will communicate through betweeen client and server.
+const {Users} = require('./utils/users');
+var users = new Users();
 
 app.use(express.static(publicPath));
 const {isRealString} = require('./utils/validation');
@@ -27,11 +29,14 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
 //-------Validating Correct Values--------//
   socket.on('join', (params, callback) => {
     if(!isRealString(params.name) || !isRealString(params.room)) {
-      callback('Name and Room name are required.');
+      return callback('Name and Room name are required.');
     }
 
     socket.join(params.room);
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, params.room);
 
+    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
     socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
 
@@ -54,8 +59,13 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   });
 
   socket.on('disconnect', () => {
-    console.log('User is disconnected.');
-    });
+    var user = users.removeUser(socket.id);
+
+    if(user) {
+      io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left the room.`));
+    }
+  });
 });
 
 server.listen(8080, ()=> {
