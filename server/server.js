@@ -1,4 +1,4 @@
-// console.log(__dirname + '/../public'); //older versio
+// console.log(__dirname + '/../public'); //older version
 
 const path = require('path');
 const publicPath = path.join(__dirname + '/../public');
