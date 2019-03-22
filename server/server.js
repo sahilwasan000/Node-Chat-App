@@ -54,7 +54,7 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
     //     from: message.from,
     //     text: message.text,
     //     createdAt: new Date().getTime()
-     });
+    // });
   });
 
   socket.on('createLocationMessage', (coords) => {
