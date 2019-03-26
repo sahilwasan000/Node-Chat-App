@@ -1,21 +1,21 @@
 // console.log(__dirname + '/../public'); //older version
 
 const path = require('path');
-const publicPath = path.join(__dirname + '/../public');
+const publicPath = path.join(__dirname + '/public');
 const PORT = process.env.PORT || 8080;
 const http = require('http');
 const socketIO = require('socket.io');
-const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./server/utils/message.js');
 
 const express = require('express');
 const app = express();
 var server = http.createServer(app);// We were already using it behind the scenes.
 var io = socketIO(server);//we get here our web sockets server. We will communicate through betweeen client and server.
-const {Users} = require('./utils/users');
+const {Users} = require('./server/utils/users');
 var users = new Users();
 
 app.use(express.static(publicPath));
-const {isRealString} = require('./utils/validation');
+const {isRealString} = require('./server/utils/validation');
 
 io.on('connection', (socket) => {//connection refers to a new connection being called.
   console.log('New User is connected.');//listen to an event and do something when that event happens. socket-> refers to individual socket.
