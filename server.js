@@ -75,6 +75,6 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
   });
 });
 
-server.listen(8080, ()=> {
+server.listen(port, ()=> {
   console.log(`Server Up on ${port}`);
 });
