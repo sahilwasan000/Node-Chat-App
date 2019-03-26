@@ -2,7 +2,7 @@
 
 const path = require('path');
 const publicPath = path.join(__dirname + '/public');
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 const http = require('http');
 const socketIO = require('socket.io');
 const {generateMessage, generateLocationMessage} = require('./server/utils/message.js');
@@ -76,5 +76,5 @@ io.on('connection', (socket) => {//connection refers to a new connection being c
 });
 
 server.listen(8080, ()=> {
-  console.log(`Server Up on ${PORT}`);
+  console.log(`Server Up on ${port}`);
 });
