@@ -123,6 +123,6 @@ socket.on('connect', function ()  { //for the client side.
       });
     }, function () {
       locationButton.removeAttr('disabled').text('Send Location');
-    return alert('Unable to fetch your location.') //for asking permission to turn on/off location.
+    return alert('Unable to fetch your location.')  //for asking permission to turn on/off location.
     });
   });
