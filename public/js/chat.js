@@ -67,6 +67,7 @@ socket.on('connect', function ()  { //for the client side.
      from: message.from,
      createdAt: formattedTime
    });
+   
 
    jQuery('#messages').append(html);
    scrollToBottom();
