@@ -28,9 +28,7 @@ socket.on('connect', function ()  { //for the client side.
     if(err) {
       alert(err);
       window.location.href = '/';
-    }
-
-    else {
+    } else {
       console.log('Nooooooo errrr');
     }
   });
