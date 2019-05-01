@@ -17,7 +17,7 @@ app.use(express.static(publicPath));
 const {isRealString} = require('./server/utils/validation');
 
 io.on('connection', (socket) => {//connection refers to a new connection being called.
-  console.log('New User is connected.');//listen to an event and do something when that event happens. socket-> refers to individual socket.
+console.log('New User is connected.');//listen to an event and do something when that event happens. socket-> refers to individual socket.
 
   // socket.emit('newMessage', {//socket.emit emits only to a specific user.
   //   from: 'sahil@gmail.com',
