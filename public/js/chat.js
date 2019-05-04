@@ -1,4 +1,3 @@
-
 var socket = io(); //not native to browser. Initiating req to open a web socket from client side and keep it open.
 
 //Function To enable Auto-Scrolling.
